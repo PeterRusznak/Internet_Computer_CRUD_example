@@ -9,7 +9,7 @@
         "crud"
       ],
       "frontend": {
-        "entrypoint": "src/crud_assets/public/index.js"
+        "entrypoint": "src/crud_assets/public/index.jsx"
       },
       "source": [
         "src/crud_assets/assets",
