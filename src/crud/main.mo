@@ -34,6 +34,27 @@ actor Assistant {
         
         return id;
     };
+
+    public query func findCustomerById(id : Id) : async ?Customer {
+        let result = Trie.find(customers, key(id), eq);
+        return result;
+    };
+
+    //delete Customer if updatedCustomer is null. Otherwise update.  
+    public func updateOrDelete(id : Id, updatedCustomer: ?Customer) : async Bool {
+        let result = Trie.find(customers, key(id), eq);
+        let exists = Option.isSome(result);
+        if (exists) {
+        customers := Trie.replace(
+            customers,
+            key(id),
+            eq,
+            updatedCustomer,
+        ).0;
+        };
+        return exists;
+    };
+
   
 
     public query func findAll () : async [CustomerWithId]  {

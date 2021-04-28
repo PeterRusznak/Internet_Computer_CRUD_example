@@ -22,6 +22,20 @@ const Create = (props) => {
         setEmail(event.target.value);
     }
 
+    useEffect(() => {
+        if (id == -1) {
+            setPageTitle("Add new Customer");
+            return;
+        }
+        setPageTitle("Edit existing Customer");
+        crud.findCustomerById(parseInt(id)).then((result) => {
+            let updatableCustomer = fromOptional(result);
+            setName(updatableCustomer.name);
+            setAddress(updatableCustomer.address);
+            setEmail(updatableCustomer.email);
+        });
+    }, []);
+
     const saveOrUpdate = (event) => {
         event.preventDefault();
         if (!name || !address || !email) {
@@ -33,9 +47,15 @@ const Create = (props) => {
             address: address,
             email: email,
         };
-        crud.addCustomer(customer).then((result) => {
-            props.history.push('/customers');
-        });
+        if (id < 0) {
+            crud.addCustomer(customer).then((result) => {
+                props.history.push('/customers');
+            });
+        } else {
+            crud.updateOrDelete(parseInt(id), toOptional(customer)).then((r) => {
+                props.history.push('/customers');
+            });
+        }
     }
 
     return (

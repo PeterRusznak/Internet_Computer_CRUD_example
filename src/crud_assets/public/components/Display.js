@@ -6,23 +6,31 @@ const Display = (props) => {
 
     const [customers, setCustomers] = useState([]);
     useEffect(() => {
+        loadCustomers();
+    }, []);
+
+    const loadCustomers = () => {
         crud.findAll().then((result) => {
             if (result) {
                 setCustomers(result);
             }
         });
-    }, []);
+    }
 
     const addCustomer = (() => {
         props.history.push('/add/-1');
     });
 
     const editCustomer = ((id) => {
-        console.log(id);
+        props.history.push(`/add/${id}`);
     });
 
     const deleteCustomer = ((id) => {
-        console.log(id);
+        crud.updateOrDelete(parseInt(id), toOptional(null)).then((result) => {
+            if (result) {
+                loadCustomers();
+            }
+        });
     });
 
     return (

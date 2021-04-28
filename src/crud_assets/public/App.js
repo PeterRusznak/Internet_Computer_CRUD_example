@@ -5,7 +5,6 @@ import Create from './components/Create';
 import Display from './components/Display';
 
 const App = () => {
-
     return (
         <div>
             <BrowserRouter>
@@ -20,5 +19,4 @@ const App = () => {
         </div>
     );
 }
-
 export default App
