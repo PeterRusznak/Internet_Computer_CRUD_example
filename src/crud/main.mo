@@ -3,7 +3,13 @@ import Nat "mo:base/Nat";
 import Option "mo:base/Option";
 import Trie "mo:base/Trie";
 
-// Define the actor
+/* An actor is like an object (and in Motoko, even looks like one), 
+in that it encapsulates private state along with a set of methods to process 
+messages that can be sent to it. But all message sends are asynchronous. 
+Consequently, unlike conventional methods in OO, actor methods do not have results.
+ Moreover, all messages are received sequentially by an actor—that is, 
+ it has an implicit message queue and methods execute atomically,
+  even when messages are sent concurrently.*/
 actor Assistant {
     public type Id = Word32;
     private stable var next : Id = 0;
